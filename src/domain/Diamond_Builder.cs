@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,12 +7,37 @@ namespace domain
     public class Diamond_Builder
     {
         private const string NEW_LINE = "\n";
+        private const char WHITE_SPACE = ' ';
 
         private static readonly List<string> alphabet = new List<string>
         {
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" 
-        }; 
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z"
+        };
 
         public string Build_Diamond(string middle_letter)
         {
@@ -36,25 +62,58 @@ namespace domain
 
         private List<string> Insert_Spaces(List<string> letters)
         {
-            var letters_with_prepended_spaces = Prepend_Spaces_To(letters);
-            var letters_with_outside_spaces = Append_Spaces_To(letters: letters_with_prepended_spaces);
-            var letters_with_spaces = Inject_Spaces_in_the_Middle(letters: letters_with_outside_spaces);
+            var letters_with_left_and_right_spaces = Add_Left_And_Right_Spaces_To(letters);
+            var letters_with_spaces = Inject_Spaces_in_the_Middle(letters_with_left_and_right_spaces);
             return letters_with_spaces;
         }
 
-        private List<string> Prepend_Spaces_To(List<string> letters)
+        private List<string> Add_Left_And_Right_Spaces_To(List<string> letters)
         {
-            return letters;
+            if (letters.Count == 1)
+                return letters;
+
+            var spaces = Create_Spaces_For(letters);
+
+            var letters_with_prepended_spaces = letters
+                .Zip(spaces, (l, s) => s + l + s)
+                .ToList();
+
+            return letters_with_prepended_spaces;
         }
 
-        private List<string> Append_Spaces_To(List<string> letters)
+        private IEnumerable<string> Create_Spaces_For(IReadOnlyCollection<string> letters)
         {
-            return letters;
+            var spaces = new List<string>();
+
+            for (var i = letters.Count - 1; i > 0; i--)
+                spaces.Add(new String(WHITE_SPACE, i));
+
+            spaces.Add("");
+            return spaces;
         }
 
         private List<string> Inject_Spaces_in_the_Middle(List<string> letters)
         {
-            return letters;
+            if (letters.Count == 1)
+                return letters;
+
+            var spaces = Create_Middle_Spaces_For(letters);
+
+            var letters_with_middle_spaces = letters
+                .Zip(spaces, (l, s) => l.Insert((l.Count() / 2), s))
+                .ToList();
+
+            return letters_with_middle_spaces;
+        }
+
+        private List<string> Create_Middle_Spaces_For(List<string> letters)
+        {
+            var spaces = new List<string> { "" };
+
+            for (var i = 1; i < letters.Count; i += 2)
+                spaces.Add(new String(WHITE_SPACE, i));
+
+            return spaces;
         }
 
         private IEnumerable<string> Duplicate_First_Half_of_Diamond(List<string> half_diamond)
