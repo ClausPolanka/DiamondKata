@@ -110,8 +110,12 @@ namespace domain
         {
             var spaces = new List<string> { "" };
 
-            for (var i = 1; i < letters.Count; i += 2)
-                spaces.Add(new String(WHITE_SPACE, i));
+            var odd_factor = 1;
+            letters.ForEach(l => 
+            {
+                spaces.Add(new String(WHITE_SPACE, odd_factor));
+                odd_factor += 2;
+            });
 
             return spaces;
         }
@@ -121,6 +125,7 @@ namespace domain
             var duplicate = half_diamond
                 .Take(count: half_diamond.Count - 1)
                 .ToList();
+            duplicate.Reverse();
             half_diamond.AddRange(duplicate);
             return half_diamond;
         }
