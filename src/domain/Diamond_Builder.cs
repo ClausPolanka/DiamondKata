@@ -36,7 +36,24 @@ namespace domain
 
         private List<string> Insert_Spaces(List<string> letters)
         {
-            // TODO Build skeleton.
+            var letters_with_prepended_spaces = Prepend_Spaces_To(letters);
+            var letters_with_outside_spaces = Append_Spaces_To(letters: letters_with_prepended_spaces);
+            var letters_with_spaces = Inject_Spaces_in_the_Middle(letters: letters_with_outside_spaces);
+            return letters_with_spaces;
+        }
+
+        private List<string> Prepend_Spaces_To(List<string> letters)
+        {
+            return letters;
+        }
+
+        private List<string> Append_Spaces_To(List<string> letters)
+        {
+            return letters;
+        }
+
+        private List<string> Inject_Spaces_in_the_Middle(List<string> letters)
+        {
             return letters;
         }
 
