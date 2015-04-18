@@ -14,6 +14,7 @@ namespace domain_tests
         [InlineData("A", "A")]
         [InlineData("B", " A \nB B\n A ")]
         [InlineData("C", "  A  \n B B \nC   C\n B B \n  A  ")]
+        [InlineData("D", "   A   \n  B B  \n C   C \nD     D\n C   C \n  B B  \n   A   ")]
         public void Build_Diamond_For_Given_Input(string input, string expected_diamond )
         {
             var sut = new Diamond_Builder();
