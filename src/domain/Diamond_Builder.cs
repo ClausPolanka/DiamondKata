@@ -69,9 +69,6 @@ namespace domain
 
         private List<string> Add_Left_And_Right_Spaces_To(List<string> letters)
         {
-            if (letters.Count == 1)
-                return letters;
-
             var spaces = Create_Spaces_For(letters);
 
             var letters_with_prepended_spaces = letters
@@ -86,7 +83,7 @@ namespace domain
             var spaces = new List<string>();
 
             for (var i = letters.Count - 1; i > 0; i--)
-                spaces.Add(new String(WHITE_SPACE, i));
+                spaces.Add(new String(WHITE_SPACE, count: i));
 
             spaces.Add("");
             return spaces;
@@ -94,13 +91,10 @@ namespace domain
 
         private List<string> Inject_Spaces_in_the_Middle(List<string> letters)
         {
-            if (letters.Count == 1)
-                return letters;
-
             var spaces = Create_Middle_Spaces_For(letters);
 
             var letters_with_middle_spaces = letters
-                .Zip(spaces, (l, s) => l.Insert((l.Count() / 2), s))
+                .Zip(spaces, (l, s) => l.Insert(startIndex: (l.Count() / 2), value: s))
                 .ToList();
 
             return letters_with_middle_spaces;
@@ -110,11 +104,11 @@ namespace domain
         {
             var spaces = new List<string> { "" };
 
-            var odd_factor = 1;
+            var odd_nr = 1;
             letters.ForEach(l => 
             {
-                spaces.Add(new String(WHITE_SPACE, odd_factor));
-                odd_factor += 2;
+                spaces.Add(new String(WHITE_SPACE, count: odd_nr));
+                odd_nr += 2;
             });
 
             return spaces;
