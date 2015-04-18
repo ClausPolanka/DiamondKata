@@ -106,7 +106,7 @@ namespace domain
             return letters_with_middle_spaces;
         }
 
-        private List<string> Create_Middle_Spaces_For(List<string> letters)
+        private IEnumerable<string> Create_Middle_Spaces_For(List<string> letters)
         {
             var spaces = new List<string> { "" };
 
